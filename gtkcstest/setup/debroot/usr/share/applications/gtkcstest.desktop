@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=1.0
+Name=GTK Test App
+Type=Application
+Exec=/usr/share/gtkcstest/gtkcstest
+Icon=/usr/share/pixmaps/com.toptensoftware.gtkcstest.png
+

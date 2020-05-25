@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Symlink bin command to /usr/bin
+rm -f /usr/bin/BUILD_PROJNAME
+ln -s /usr/share/BUILD_PROJNAME/BUILD_PROJNAME /usr/bin/BUILD_PROJNAME
+
+# Install the desktop entry
+if hash desktop-file-install 2>/dev/null; then
+	desktop-file-install /usr/share/applications/BUILD_PROJNAME.desktop
+fi
