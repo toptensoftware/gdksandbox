@@ -13,8 +13,8 @@ namespace gtkcstest
             // ComRegisterFunctionAttribute class
             typeId = g_type_register_static_simple(
                 gtk_widget_get_type(), "mywidget", 
-                Marshal.SizeOf<MyWidgetClass>(), Immortal<Action_IntPtr>(InitClass),
-                Marshal.SizeOf<MyWidgetInstance>(), Immortal<Action_IntPtr>(InitInstance),
+                Marshal.SizeOf<MyWidgetClass>(), InitClass,
+                Marshal.SizeOf<MyWidgetInstance>(), InitInstance,
                 0);
         }
 
@@ -37,7 +37,7 @@ namespace gtkcstest
             return g_object_new_with_properties(typeId, 0, IntPtr.Zero, IntPtr.Zero);
         }
 
-        static void InitClass(IntPtr classPtr)
+        static void InitClass(IntPtr classPtr, IntPtr classData)
         {
             unsafe
             {
@@ -48,7 +48,7 @@ namespace gtkcstest
             }
         }
 
-        static void InitInstance(IntPtr instancePtr)
+        static void InitInstance(IntPtr instancePtr, IntPtr classPtr)
         {
             gtk_widget_set_has_window(instancePtr, true); 
         }

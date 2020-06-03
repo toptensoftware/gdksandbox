@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\GuiKit3\GuiKit\PlatformGtk\Interop\gtk.cs" Link="gtk.cs" />
+    <Compile Include="..\..\GuiKit3\GuiKit\PlatformGtk\Interop\gtk.cs" Link="gtk.cs" />
   </ItemGroup>
 
 </Project>

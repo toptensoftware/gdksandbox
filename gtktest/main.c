@@ -11,10 +11,11 @@ static void
 activate (GtkApplication* app,
           gpointer        user_data)
 {
-  GtkWidget* window = gtk_application_window_new (app);
+//  GtkWidget* window = gtk_application_window_new (app);
+  GtkWidget* window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
   gtk_window_set_title(GTK_WINDOW(window), "Window");
   gtk_window_set_default_size(GTK_WINDOW(window), 200, 200);
-
 
   GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add(GTK_CONTAINER(window), vbox);
@@ -35,8 +36,9 @@ activate (GtkApplication* app,
   GtkWidget* widget = mywidget_new();
   gtk_box_pack_start(GTK_BOX(vbox), widget, TRUE, TRUE, 0);
 
-
   gtk_widget_show_all(window);
+//  gdk_window_move_resize(gtk_widget_get_window(window),200, 200, 600, 400);
+
 }
 
 int
@@ -44,16 +46,22 @@ main (int argc, char **argv)
 {
   int status;
 
+/*
   GdkDisplay* pDisplay = gdk_display_get_default();
 
   int monitors = gdk_display_get_n_monitors(pDisplay);
   printf("Monitors: %i\n", monitors);
 
-  printf("sizeof(GtkWindow) = %li\n", sizeof(GtkWindow));
-  printf("sizeof(GtkWindowClass) = %li\n", sizeof(GtkWindowClass));
+  printf("sizeof(GtkApplicationWindow) = %li\n", sizeof(GtkApplicationWindow));
+  printf("sizeof(GtkApplicationWindowClass) = %li\n", sizeof(GtkApplicationWindowClass));
+  printf("sizeof(GdkEventConfigure) = %li\n", sizeof(GdkEventConfigure));
+  */
 
   app = gtk_application_new ("org.gtk.example", G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+
+  //g_application_hold(app);
+  g_application_hold(G_APPLICATION(app));
   status = g_application_run (G_APPLICATION (app), argc, argv);
   g_object_unref (app);
 

@@ -11,12 +11,14 @@ namespace gtkcstest
 
         static void quitApp(IntPtr sender)
         {
+            g_application_release(g_app);
             g_application_quit(g_app);
         }
 
         static void activate(IntPtr app, IntPtr user_data)
         {
-            var window = gtk_application_window_new(app);
+//            var window = gtk_application_window_new(app);
+            var window = MyWindow.New(app);
             gtk_window_set_title(window, "My C# GTK Window");
             gtk_window_set_default_size(window, 200, 200);
 
@@ -63,8 +65,9 @@ namespace gtkcstest
                 Console.WriteLine($"Monitor {i}: {r.x},{r.y} x {r.width},{r.height} @ {gdk_monitor_get_scale_factor(monitor)} [{primary}]");
             }
 
-            Console.WriteLine($"SizeOf<GtkWindow>: {Marshal.SizeOf<GtkWindow>()}");
-            Console.WriteLine($"SizeOf<GtkWindowClass>: {Marshal.SizeOf<GtkWindowClass>()}");
+            Console.WriteLine($"SizeOf<GtkApplicationWindow>: {Marshal.SizeOf<GtkApplicationWindow>()}");
+            Console.WriteLine($"SizeOf<GtkApplicationWindowClass>: {Marshal.SizeOf<GtkApplicationWindowClass>()}");
+            Console.WriteLine($"SizeOf<GdkEventConfigure>: {Marshal.SizeOf<GdkEventConfigure>()}");
 
 
             g_app = gtk_application_new("com.toptensoftware.example", GApplicationFlags.G_APPLICATION_FLAGS_NONE);
@@ -72,6 +75,7 @@ namespace gtkcstest
             Action_IntPtr_IntPtr del = activate;
             g_signal_connect(g_app, "activate", del, IntPtr.Zero);
 
+            g_application_hold(g_app);
             int status = g_application_run(g_app, args);
             g_object_unref(g_app);
             return status;
