@@ -66,6 +66,7 @@ namespace gtkcstest
         {
             gtk_window_move(self, 2000, 100);
             gtk_window_resize(self, 300, 300);
+            gtk_window_fullscreen(self);
             base_realize?.Invoke(self);
         }
 
