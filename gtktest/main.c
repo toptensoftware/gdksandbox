@@ -46,16 +46,23 @@ main (int argc, char **argv)
 {
   int status;
 
-/*
+  gtk_init(&argc, &argv);
+
+
   GdkDisplay* pDisplay = gdk_display_get_default();
 
   int monitors = gdk_display_get_n_monitors(pDisplay);
   printf("Monitors: %i\n", monitors);
+  for (int i=0; i<monitors; i++)
+  {
+      GdkMonitor* pMonitor = gdk_display_get_monitor(pDisplay, i);
+      GdkRectangle r;
+      gdk_monitor_get_geometry(pMonitor, &r);
+      printf("Monitor %i: %i,%i x %i,%i @ %i\n", i, r.x, r.y, r.width, r.height, gdk_monitor_get_scale_factor(pMonitor));
+  }
 
-  printf("sizeof(GtkApplicationWindow) = %li\n", sizeof(GtkApplicationWindow));
-  printf("sizeof(GtkApplicationWindowClass) = %li\n", sizeof(GtkApplicationWindowClass));
-  printf("sizeof(GdkEventConfigure) = %li\n", sizeof(GdkEventConfigure));
-  */
+    printf("GDK_SCALE: %s", g_getenv ("GDK_SCALE"));
+
 
   app = gtk_application_new ("org.gtk.example", G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
